@@ -154,8 +154,11 @@ Here, we're going to introduce the [MS MARCO passage ranking test collection](ht
 
 If you haven't cloned the [anserini](https://github.com/castorini/anserini) repository already, clone it and get its `tools` submodule:
 ```bash
-git clone https://github.com/castorini/anserini.git
+git clone --recurse-submodules https://github.com/castorini/anserini.git
 cd anserini
+```
+If you have already cloned the repository, you can retrieve the `tools` submodule and update it to the commit referenced by the main repository using:
+```bash
 git submodule update --init --recursive
 ```
 
@@ -174,6 +177,9 @@ tar xvfz collections/msmarco-passage/collectionandqueries.tar.gz -C collections/
 ```
 
 To confirm, `collectionandqueries.tar.gz` should have MD5 checksum of `31644046b18952c1386cd4564ba2ae69`.
+```bash
+md5sum collections/msmarco-passage/collectionandqueries.tar.gz
+```
 
 If you peak inside the collection:
 
@@ -200,7 +206,9 @@ Look inside a file to see the json format we use.
 The entire collection is now something like this:
 
 ```bash
-$ wc collections/msmarco-passage/collection_jsonl/* 
+wc collections/msmarco-passage/collection_jsonl/* 
+```
+```plaintext
  1000000 58716381 374524070 collections/msmarco-passage/collection_jsonl/docs00.json
  1000000 59072018 377845773 collections/msmarco-passage/collection_jsonl/docs01.json
  1000000 58895092 375856044 collections/msmarco-passage/collection_jsonl/docs02.json
@@ -232,7 +240,9 @@ Verify with `wc`.
 Check out its contents:
 
 ```bash
-$ head collections/msmarco-passage/queries.dev.small.tsv
+head collections/msmarco-passage/queries.dev.small.tsv
+```
+```plaintext
 1048585	what is paula deen's brother
 2	 Androgen receptor define
 524332	treating tension headaches without medication
@@ -252,7 +262,9 @@ These queries are taken from Bing search logs, so they're "realistic" web querie
 Okay, let's now cross-reference the `qid` with the relevance judgments, i.e., the qrels file:
 
 ```bash
-$ grep 1048585 collections/msmarco-passage/qrels.dev.small.tsv 
+grep 1048585 collections/msmarco-passage/qrels.dev.small.tsv 
+```
+```plaintext
 1048585	0	7187158	1
 ```
 
@@ -268,7 +280,9 @@ Well, how do we get the actual contents of document 7187158?
 The simplest way is to grep through the collection itself:
 
 ```bash
-$ grep 7187158 collections/msmarco-passage/collection.tsv
+grep 7187158 collections/msmarco-passage/collection.tsv
+```
+```plaintext
 7187158	Paula Deen and her brother Earl W. Bubba Hiers are being sued by a former general manager at Uncle Bubba'sâ¦ Paula Deen and her brother Earl W. Bubba Hiers are being sued by a former general manager at Uncle Bubba'sâ¦
 ```
 
@@ -282,7 +296,9 @@ Well, we've just seen that there are 6980 training queries.
 For those, we have 7437 relevance judgments:
 
 ```bash
-$ wc collections/msmarco-passage/qrels.dev.small.tsv  
+wc collections/msmarco-passage/qrels.dev.small.tsv
+```
+```plaintext 
 7437   29748  143300 collections/msmarco-passage/qrels.dev.small.tsv
 ````
 
@@ -295,7 +311,9 @@ This is just looking at the development set.
 Now let's look at the training set:
 
 ```bash
-$ wc collections/msmarco-passage/qrels.train.tsv               
+wc collections/msmarco-passage/qrels.train.tsv
+```
+```plaintext              
 532761 2131044 10589532 collections/msmarco-passage/qrels.train.tsv
 ```
 
@@ -336,3 +354,4 @@ If you think this guide can be improved in any way (e.g., you caught a typo or t
 + Results reproduced by [@gituserbs](https://github.com/gituserbs) on 2023-10-07 (commit [`d88003c`](https://github.com/castorini/anserini/commit/d88003c71ae7b2e3da65885c709f61aac57611b4))
 + Results reproduced by [@shayanbali](https://github.com/shayanbali) on 2023-10-12 (commit [`8194b8e`](https://github.com/castorini/anserini/commit/8194b8e91fe799fcb0d3b4348e9d710a0aa1ad26))
 + Results reproduced by [@oscarbelda86](https://github.com/oscarbelda86) on 2023-10-30 (commit [`824154b`](https://github.com/castorini/anserini/commit/824154bf9226b2f44146a5b258f0dfb2042eb583))
++ Results reproduced by [@Avi777](https://github.com/Avi777) on 2023-11-01 (commit [`fe080dc`](https://github.com/castorini/anserini/commit/fe080dc921d90cf259dde013f2d4d72e5bf414ff))
